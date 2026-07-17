@@ -19546,6 +19546,7 @@ RENDERERS.wordProblems = {
       '<div class="numpad-display" id="wpDisplay" style="min-width:80px;font-size:28px;">_</div>' +
       '<span style="font-size:14px;font-weight:700;color:var(--ink-soft);margin-left:8px;">' + escapeHTML(q.unit) + '</span>' +
     '</div>';
+    html += '<div id="numpadHost" style="margin-top:14px;"></div>';
     html += '<button class="btn btn-primary" id="wpCheck" style="margin-top:14px;width:100%;max-width:220px;" disabled>✅ Check!</button>';
     html += '</div>';
     stage.innerHTML = html;
@@ -19557,6 +19558,12 @@ RENDERERS.wordProblems = {
       var btn = document.getElementById("wpCheck");
       if (btn) btn.disabled = current === "";
     }
+    var pad = mountNumpad(document.getElementById("numpadHost"), {
+      maxDigits: 4,
+      onChange: function(val) { current = (val === null ? "" : String(val)); updateDisplay(); }
+    });
+    var ownDisplay = pad.el.querySelector(".numpad-display");
+    if (ownDisplay) ownDisplay.style.display = "none";
 
     ctx._numpadOnChange = function(val) {
       current = val;
@@ -19622,6 +19629,7 @@ RENDERERS.missingNumber = {
     html += '<div class="numpad-answer-row">' +
       '<div class="numpad-display" id="mnDisplay" style="min-width:70px;font-size:26px;">_</div>' +
     '</div>';
+    html += '<div id="numpadHost" style="margin-top:14px;"></div>';
     html += '<button class="btn btn-primary" id="mnCheck" style="margin-top:14px;width:100%;max-width:220px;" disabled>✅ Check!</button>';
     html += '</div>';
     stage.innerHTML = html;
@@ -19635,6 +19643,12 @@ RENDERERS.missingNumber = {
       var btn = document.getElementById("mnCheck");
       if (btn) btn.disabled = current === "";
     }
+    var pad = mountNumpad(document.getElementById("numpadHost"), {
+      maxDigits: 4,
+      onChange: function(val) { current = (val === null ? "" : String(val)); updateDisplay(); }
+    });
+    var ownDisplay = pad.el.querySelector(".numpad-display");
+    if (ownDisplay) ownDisplay.style.display = "none";
 
     ctx._numpadOnChange = function(val) { current = val; updateDisplay(); };
     ctx._numpadOnCheck  = function() { ctx.onCheck(parseInt(current, 10) === answer); };
@@ -19780,6 +19794,7 @@ RENDERERS.doublesHalves = {
     html += '<div class="numpad-answer-row">' +
       '<div class="numpad-display" id="dhDisplay" style="min-width:70px;font-size:28px;">_</div>' +
     '</div>';
+    html += '<div id="numpadHost" style="margin-top:14px;"></div>';
     html += '<button class="btn btn-primary" id="dhCheck" style="margin-top:14px;width:100%;max-width:220px;" disabled>✅ Check!</button>';
     html += '</div>';
     stage.innerHTML = html;
@@ -19791,6 +19806,12 @@ RENDERERS.doublesHalves = {
       var btn = document.getElementById("dhCheck");
       if (btn) btn.disabled = current === "";
     }
+    var pad = mountNumpad(document.getElementById("numpadHost"), {
+      maxDigits: 3,
+      onChange: function(val) { current = (val === null ? "" : String(val)); updateDisplay(); }
+    });
+    var ownDisplay = pad.el.querySelector(".numpad-display");
+    if (ownDisplay) ownDisplay.style.display = "none";
 
     ctx._numpadOnChange = function(val) { current = val; updateDisplay(); };
     ctx._numpadOnCheck  = function() { ctx.onCheck(parseInt(current, 10) === q.answer); };
